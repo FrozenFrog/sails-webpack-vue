@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import AddItems from './AddItems';
+  import AddItems from './AddItems';
   let modal = null;
   export default {
     data() {
@@ -33,6 +33,9 @@ import AddItems from './AddItems';
     },
     components: {
       AddItems: AddItems
+    },
+    beforeRouteEnter (to, from, next) {
+      next({path: '/login'})
     }
 
   };

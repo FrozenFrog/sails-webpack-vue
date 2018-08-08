@@ -8,13 +8,12 @@
 module.exports = {
   login: async (req, res) => {
     if (req.method == 'POST'){
-      let userQuery = await User.findOne({Username: req.body.username})
+      let userQuery = await User.findOne({Username: req.body.username, Password: req.body.password})
       if (!userQuery) {
         return res.notFound()
       }
-      if (req.body.password == userQuery.Password){
-        return res.json(userQuery)
-      }
+      sails.log(userQuery)
+      return res.json(userQuery)
     }
     else res.status(405).send("Method Not Allowed")
   }
