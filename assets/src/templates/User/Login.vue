@@ -11,6 +11,7 @@
                     <input id="icon_lock" v-model="password" type="password" class="validate">
                     <label for="icon_lock">{{passwordMessage_text}}</label>
                 </div>
+                <h6 class="red-text center-align animated" for="loginMessageNotify_text" :class="loginMessageShow" >{{loginMessageNotify_text}}</h6>
                 <div class="center" id="LoginButton" @click="login">
                     <a class="btn waves-effect waves-light center red">
                     {{loginMessage_text}}
@@ -27,6 +28,8 @@
             return {
                 "username": "",
                 "password": "",
+                "loginMessageNotify_text": "",
+                "loginMessageShow": "",
                 "loginMessage_text": this.$t("loginMessage_text"),
                 "usernameMessage_text": this.$t("usernameMessage_text"),
                 "passwordMessage_text": this.$t("passwordMessage_text")
@@ -38,7 +41,18 @@
                     "username": this.username,
                     "password": this.password
                 }).then((response) => {
-                    console.log(response);
+                    console.log(response)
+                }).catch((err) => {
+                    if (err.response.status == 404) {
+                        this.loginMessageShow = "fadeInUp"
+                        this.loginMessageNotify_text= this.$t("loginMessageNotify_text")
+                        setInterval(() => this.loginMessageShow = "fadeOutDown", 5000)
+                    }
+                    else {
+                        this.loginMessageShow = "fadeInUp"
+                        this.loginMessageNotify_text = this.$t("loginMessageNotifyError_text")
+                        setInterval(() => this.loginMessageShow = "fadeOutDown", 5000)
+                    }
                 })
             }
         },
@@ -59,12 +73,16 @@ div#LoginButton{
     "en": {
       "loginMessage_text": "Login",
       "usernameMessage_text": "Username",
-      "passwordMessage_text": "Password"
+      "passwordMessage_text": "Password",
+      "loginMessageNotify_text": "Invalid input",
+      "loginMessageNotifyError_text": "Something wents wrong"
     },
     "vn": {
       "loginMessage_text": "Đăng nhập",
       "usernameMessage_text": "Tên đăng nhập",
-      "passwordMessage_text": "Mật khẩu"
+      "passwordMessage_text": "Mật khẩu",
+      "loginMessageNotify_text": "Sai tên đăng nhập hoặc mật khẩu",
+      "loginMessageNotifyError_text": "Đã có lỗi xảy ra"
     }
   }
 </i18n>
