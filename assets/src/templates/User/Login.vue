@@ -11,7 +11,7 @@
                     <input id="icon_lock" v-model="password" type="password" class="validate">
                     <label for="icon_lock">{{passwordMessage_text}}</label>
                 </div>
-                <div class="center" id="LoginButton">
+                <div class="center" id="LoginButton" @click="login">
                     <a class="btn waves-effect waves-light center red">
                     {{loginMessage_text}}
                     <i class="material-icons">input</i>
@@ -30,6 +30,16 @@
                 "loginMessage_text": this.$t("loginMessage_text"),
                 "usernameMessage_text": this.$t("usernameMessage_text"),
                 "passwordMessage_text": this.$t("passwordMessage_text")
+            }
+        },
+        methods: {
+            login() {
+                this.axios.post("/user/login", {
+                    "username": this.username,
+                    "password": this.password
+                }).then((response) => {
+                    console.log(response);
+                })
             }
         },
     }
