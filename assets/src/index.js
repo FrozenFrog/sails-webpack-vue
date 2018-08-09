@@ -4,7 +4,7 @@ import VTooltip from "v-tooltip";
 import VueRouter from "vue-router";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import App from "./templates/index.vue";
+import App from "./templates/App.vue";
 import "animate.css/animate.min.css";
 import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js";
@@ -23,11 +23,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (localStorage.getItem('user') == null) {
-        router.go({name: 'login'})
+        router.push({name: 'login'})
       } 
       else next()
     }
-    if (!to.matched.length) router.go('Index')
+    if (!to.matched.length) router.push('Index')
     else next()
 })
 
