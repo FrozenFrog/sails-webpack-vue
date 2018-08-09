@@ -5,10 +5,10 @@
             <p></p>
         </div>
             <div class="divider teal lighten-2"></div>
-            <div class="right modal-trigger" style="padding-top: 15px;" v-tooltip.left-start="AddItemTooltips" @click="showAddItemsPopupClick">
-                <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+            <div class="right modal-trigger" style="padding-top: 15px;"  v-tooltip.left-start="AddItemTooltips" @click="showAddItemsPopupClick">
+                <a class="btn-floating btn-large waves-effect waves-light red" :class="{disabled: !isAdmin}"><i class="material-icons">add</i></a>
             </div>
-            <add-items v-if="isAdmin" v-on:hideAddItemsModal="hideAddItemsModal" style="display: block;" class="modal center animated" :class="displayModal"></add-items>
+            <add-items v-if="isAdmin" v-on:hideAddItemsModal="hideAddItemsModal" class="modal center animated" :style="{display: displayModalStyle}" :class="displayModalTransitionClass"></add-items>
     </div>
 </template>
 
@@ -19,24 +19,26 @@
     data() {
       return {
         AddItemTooltips: this.$t("AddItemTooltips"),
-        isAdmin: true,
-        displayModal: ""
+        isAdmin: 0,
+        displayModalTransitionClass: "",
+        displayModalStyle: ""
       };
     },
     methods: {
       showAddItemsPopupClick() {
-        this.displayModal = "fadeInUp"
+        this.displayModalStyle ="block" //Lý do có thằng này là vì modal mặc định materialize là display none
+        this.displayModalTransitionClass = "fadeInUp"
       },
       hideAddItemsModal(){
-        this.displayModal = "fadeOutDown"
+        this.displayModalTransitionClass = "fadeOutDown"
       }
     },
     components: {
       AddItems: AddItems
     },
-    beforeRouteEnter (to, from, next) {
-      next({path: '/login'})
-    }
+    created: function () {
+      this.isAdmin = JSON.parse(localStorage.getItem('user')).isAdmin
+    },
 
   };
 </script>
