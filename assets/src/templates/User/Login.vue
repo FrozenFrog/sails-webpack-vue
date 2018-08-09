@@ -23,48 +23,66 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                "username": "",
-                "password": "",
-                "loginMessageNotify_text": "",
-                "loginMessageShow": "",
-                "loginMessage_text": this.$t("loginMessage_text"),
-                "usernameMessage_text": this.$t("usernameMessage_text"),
-                "passwordMessage_text": this.$t("passwordMessage_text")
-            }
-        },
-        methods: {
-            login() {
-                this.axios.post("/user/login", {
-                    "username": this.username,
-                    "password": this.password
-                }).then((response) => {
-                    console.log(response)
-                }).catch((err) => {
-                    if (err.response.status == 404) {
-                        this.loginMessageShow = "fadeInUp"
-                        this.loginMessageNotify_text= this.$t("loginMessageNotify_text")
-                        setInterval(() => this.loginMessageShow = "fadeOutDown", 5000)
-                    }
-                    else {
-                        this.loginMessageShow = "fadeInUp"
-                        this.loginMessageNotify_text = this.$t("loginMessageNotifyError_text")
-                        setInterval(() => this.loginMessageShow = "fadeOutDown", 5000)
-                    }
-                })
-            }
-        },
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      loginMessageNotify_text: "",
+      loginMessageShow: "",
+      loginMessage_text: this.$t("loginMessage_text"),
+      usernameMessage_text: this.$t("usernameMessage_text"),
+      passwordMessage_text: this.$t("passwordMessage_text"),
+      token: ""
+    };
+  },
+  methods: {
+    login() {
+      this.axios
+        .post("/user/login", {
+          username: this.username,
+          password: this.password
+        })
+        .then(response => {
+          console.log(response.data.token);
+          this.token = response.data.token
+          this.la()
+        })
+        .catch(err => {
+          if (err.response.status == 404) {
+            this.loginMessageShow = "fadeInUp";
+            this.loginMessageNotify_text = this.$t("loginMessageNotify_text");
+            setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
+          } else {
+            this.loginMessageShow = "fadeInUp";
+            this.loginMessageNotify_text = this.$t(
+              "loginMessageNotifyError_text"
+            );
+            setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
+          }
+        });
+    },
+    la() {
+      this.axios
+        .get("/user", {
+          headers: {
+            "token": this.token
+          }
+        })
+        .then(response => {
+          console.log(response);
+        });
     }
+  }
+};
 </script>
 
 <style scoped>
-form{
-    margin-top: 200px;
+form {
+  margin-top: 200px;
 }
-div#LoginButton{
-    padding-bottom: 30px;
+div#LoginButton {
+  padding-bottom: 30px;
 }
 </style>
 

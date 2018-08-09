@@ -12,10 +12,14 @@ module.exports = {
       if (!userQuery) {
         return res.notFound()
       }
-      sails.log(userQuery)
-      return res.json(userQuery)
+      /*
+      Trả về cái gì nếu verify thành công
+      token signed bởi jwToken từ object user - cái này không decoded được ở phía frontend, chỉ  dùng để khi request từ frontend thì backend sẽ verify nó
+       */
+      userQuery.Password = null; //Delete password
+      return res.json({token: jwToken.sign(userQuery), userInfo: userQuery})
     }
-    else res.status(405).send("Method Not Allowed")
+    else return res.status(405).send("Method Not Allowed")
   }
 }
 
