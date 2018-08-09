@@ -25,7 +25,7 @@ export const routes = [
   },
   {
       /* Redirect to login page if cannot find valid URL
-      I'm thinking that Login page will check if isLogin next to Index */
+      Never redirect to index component, login component will check if localStorage has user object */
     path: "*", 
     redirect: 'login'
   }
