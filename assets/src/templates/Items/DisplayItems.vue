@@ -37,7 +37,11 @@
       AddItems: AddItems
     },
     created: function () {
-      this.isAdmin = JSON.parse(localStorage.getItem('user')).isAdmin
+      let user = JSON.parse(localStorage.getItem('user'))
+      if(user){
+        if (user.isAdmin) this.isAdmin = user.isAdmin
+      }
+      else this.$router.push({name: 'login'})
     },
 
   };

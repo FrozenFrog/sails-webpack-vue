@@ -8,4 +8,10 @@
   <body>
     <div id="root"></div>
   </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
 </html>
