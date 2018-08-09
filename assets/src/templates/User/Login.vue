@@ -32,8 +32,7 @@ export default {
       loginMessageShow: "",
       loginMessage_text: this.$t("loginMessage_text"),
       usernameMessage_text: this.$t("usernameMessage_text"),
-      passwordMessage_text: this.$t("passwordMessage_text"),
-      token: ""
+      passwordMessage_text: this.$t("passwordMessage_text")
     };
   },
   methods: {
@@ -44,9 +43,8 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log(response.data.token);
-          this.token = response.data.token
-          this.la()
+          localStorage.setItem('user',JSON.stringify(response.data.userInfo))
+          localStorage.setItem('token',response.data.token)
         })
         .catch(err => {
           if (err.response.status == 404) {
@@ -60,17 +58,6 @@ export default {
             );
             setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
           }
-        });
-    },
-    la() {
-      this.axios
-        .get("/user", {
-          headers: {
-            "token": this.token
-          }
-        })
-        .then(response => {
-          console.log(response);
         });
     }
   }

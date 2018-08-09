@@ -1,7 +1,6 @@
 //Verify header token when request to protected URL
 module.exports = function(req, res, next) {
   //Check if token header is present
-  sails.log(req.headers)
   if (req.headers && req.headers.token) {
     //token header is present
     var token = req.headers.token

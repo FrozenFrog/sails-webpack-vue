@@ -5,21 +5,28 @@ export const routes = [
   {
     path: "/login",
     component: Login,
-    name: "Login"
+    name: "login"
+  },
+  {
+    path: "/items",
+    component: DisplayItems,
+    name: "displayitem",
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/",
     component: Index,
-    name: "Index",
+    name: "index",
     meta: {
-      requiresAuth: true,
-      isAdmin: 
+      requiresAuth: true
     }
   },
   {
       /* Redirect to login page if cannot find valid URL
       I'm thinking that Login page will check if isLogin next to Index */
     path: "*", 
-    redirect: 'Login'
+    redirect: 'login'
   }
 ];

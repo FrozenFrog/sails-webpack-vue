@@ -57,7 +57,7 @@ export default {
     submitPrice(){
         this.itemPrice = this.itemPrice *1000;
     }
-  }
+  },
 };
 </script>
 

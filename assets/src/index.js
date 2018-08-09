@@ -22,9 +22,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      next('Login')
+      if (localStorage.getItem('user') == null) next('Login')
+      else next()
     }
-    if (!to.matched.length) next('Index')
+    if (!to.matched.length) router.go('Index')
     else next()
 })
 
