@@ -46,6 +46,7 @@ export default {
           localStorage.setItem('user',JSON.stringify(response.data.userInfo))
           localStorage.setItem('token',response.data.token)
           this.axios.defaults.headers.common['token'] = response.data.token
+          this.$store.commit('signined')
           this.$router.push({name: 'index'})
         })
         .catch(err => {

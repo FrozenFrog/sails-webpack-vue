@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueI18n from "vue-i18n";
 import VTooltip from "v-tooltip";
 import VueRouter from "vue-router";
+//import Vuex from 'vuex'
 import axios from "axios";
 import VueAxios from "vue-axios";
 import App from "./templates/App.vue";
@@ -10,15 +11,19 @@ import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js";
 
 import { routes } from "./routes";
+import  store   from "./store"
 Vue.use(VueI18n);
 Vue.use(VTooltip);
 Vue.use(VueRouter);
+
 axios.defaults.baseURL = "http://localhost:1337/";
 Vue.use(VueAxios, axios);
 
 const router = new VueRouter({
   routes
 })
+Vue.config.devtools = true
+
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -39,6 +44,7 @@ const i18n = new VueI18n({
 new Vue({
   el: "#root",
   router,
+  store,
   i18n,
   render: h => h(App)
 });

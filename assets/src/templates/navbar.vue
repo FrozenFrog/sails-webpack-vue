@@ -13,7 +13,7 @@
         </div>
         </nav>
     
-        <ul class="sidenav" id="mobile-demo"  v-if="loggedin" v-on:updateNavBar="loggedin">
+        <ul class="sidenav" id="mobile-demo"  v-if="loggedin" >
         <li><a href="/#/items">{{DisplayItems_text}}</a></li>
         <li><a href="badges.html">Components</a></li>
         <li><a href="collapsible.html">Javascript</a></li>
@@ -26,7 +26,6 @@
     export default {
         data() {
             return {
-                loggedin: false,
                 DisplayItems_text: this.$t('DisplayItems_text'),
                 logout_text: this.$t('logout_text')
             }
@@ -36,16 +35,15 @@
                 localStorage.removeItem('user')
                 localStorage.removeItem('token')
                 this.axios.defaults.headers.common['token'] = ''
-                this.loggedin = false
+                this.$store.commit('signout')
                 this.$router.push({name: 'login'})
-            },
-            updateNavBar(){
-                this.loggedin = true
             }
         },
-        created: function () {
-            if (JSON.parse(localStorage.getItem('user'))) this.loggedin = true
-        },
+        computed: {
+            loggedin (){
+                return this.$store.state.loggedin
+            }
+        }
     }
 </script>
 
