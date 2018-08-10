@@ -30,6 +30,7 @@
     "jsonwebtoken": "^8.3.0",
     "npm-run-all": "^4.1.2",
     "rimraf": "^2.6.2",
+    "sails-hook-autoreload": "^1.1.0",
     "style-loader": "^0.20.3",
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",

@@ -1,41 +1,44 @@
 <template>
-    <div class="center modal-content z-depth-2">
-        <h4>{{headerMessage}}</h4>
-        <form class="container">
-            <div class="valign-wrapper">
-                <div class="left">
-                    <div class="image-upload">
-                        <label for="file-input"><img :src="imgBase64Data" alt="" class="responsive-img"></label>
-                        <input id="file-input" @change="previewImage"  type="file" accept="image/*">
-                    </div>
-                    <a > {{imgMessage}} </a>
-                </div>
-                <div style="padding-left: 60px; width: 80%;">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input type="text" v-model="itemName">
-                            <label>{{itemNameMessage}}</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice">
-                            <label>{{itemPriceMessage}}</label>
-                        </div>
-                    </div>
-                    <h6 class="red-text center-align animated" :class="addMessageShow" >{{addItemNotify_text}}</h6>
-                </div>   
-            </div>
-            <div class="modal-footer right">
-                <a class="btn waves-effect waves-light" @click="addItem" >
-                {{acceptButtonSummit_Text}} <i class="material-icons">send</i>
-                </a>
-                <a class="btn waves-effect waves-light red" @click="hideAddItemsModal">
-                {{cancelButtonSummit_Text}} <i class="material-icons">cancel_presentation</i>
-                </a>
-            </div>
-        </form>
-    </div>
+  <div class="modal center z-depth-2" id="modal1">
+    <div class="modal-content">
+          <h4>{{headerMessage}}</h4>
+          <form >
+              <div class="valign-wrapper">
+                  <div class="left">
+                      <div class="image-upload">
+                          <label for="file-input" style="cursor: pointer;" ><img :src="imgBase64Data" alt="" class="responsive-img"></label>
+                          <input id="file-input" @change="previewImage"  type="file" accept="image/*">
+                      </div>
+                      <a > {{imgMessage}} </a>
+                  </div>
+                  <div style="padding-left: 60px; width: 80%;">
+                      <div class="row">
+                          <div class="input-field col s12">
+                              <input id="itemName" type="text" v-model="itemName" class="validate">
+                              <label for="itemName">{{itemNameMessage}}</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12">
+                              <input id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate">
+                              <label for="itemPrice">{{itemPriceMessage}}</label>
+                          </div>
+                      </div>
+                      <h6 class="red-text center-align animated" :class="addMessageShow" >{{addItemNotify_text}}</h6>
+                  </div>   
+              </div>
+              <div class="modal-footer right">
+                  <a class="btn waves-effect waves-light" @click="addItem" >
+                  {{acceptButtonSummit_Text}} <i class="material-icons">send</i>
+                  </a>
+                  <a class="btn waves-effect waves-light red modal-close">
+                  {{cancelButtonSummit_Text}} <i class="material-icons">cancel_presentation</i>
+                  </a>
+              </div>
+          </form>
+      </div>
+  </div>
+    
 </template>
 
 <script>
@@ -57,9 +60,6 @@ export default {
     };
   },
   methods: {
-    hideAddItemsModal() {
-      this.$emit("hideAddItemsModal");
-    },
     submitPrice() {
       this.itemPrice = this.itemPrice * 1000;
     },
@@ -96,9 +96,9 @@ export default {
         })
         .catch(err => {
           this.addMessageShow = "fadeInUp";
-          this.addItemNotifyError_text =
+          this.addItemNotify_text =
             this.$t("addItemNotifyError_text") +
-            err.response.status.toString() +
+            err.response.status.toString() + ": " +
             err.response.data;
           setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
         });
@@ -108,11 +108,6 @@ export default {
 </script>
 
 <style scoped>
-div.center {
-  padding-top: 15px;
-  margin-top: 90px;
-  border: 5px solid #4db6ac;
-}
 .image-upload > input {
   display: none;
 }
