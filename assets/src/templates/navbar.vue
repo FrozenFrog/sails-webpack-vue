@@ -2,22 +2,22 @@
     <div>
         <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Logo</a>
+            <router-link :to="{name: 'index'}" class="brand-logo">Coffee Shop</router-link>
             <a href="##" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down" v-if="loggedin">
-            <li><a href="/#/items">{{DisplayItems_text}}</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">Javascript</a></li>
-            <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>
+                <router-link tag="li" :to="{name: 'displayitem'}">
+                    <a>{{DisplayItems_text}}</a>
+                </router-link>
+                <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>
             </ul>
         </div>
         </nav>
     
         <ul class="sidenav" id="mobile-demo"  v-if="loggedin" >
-        <li><a href="/#/items">{{DisplayItems_text}}</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>
+            <router-link tag="li" :to="{name: 'displayitem'}">
+                    <a>{{DisplayItems_text}}</a>
+            </router-link>
+            <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>
         </ul>
     </div>
 </template>
@@ -58,17 +58,11 @@
   {
     "en": {
       "DisplayItems_text": "Items",
-      "logout_text": "Sign Out",
-      "passwordMessage_text": "Password",
-      "loginMessageNotify_text": "Invalid input",
-      "loginMessageNotifyError_text": "Something wents wrong"
+      "logout_text": "Sign Out"
     },
     "vn": {
       "DisplayItems_text": "Sản phẩm",
-      "logout_text": "Đăng xuất",
-      "passwordMessage_text": "Mật khẩu",
-      "loginMessageNotify_text": "Sai tên đăng nhập hoặc mật khẩu",
-      "loginMessageNotifyError_text": "Đã có lỗi xảy ra"
+      "logout_text": "Đăng xuất"
     }
   }
 </i18n>

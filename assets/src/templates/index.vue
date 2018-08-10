@@ -15,6 +15,12 @@
         
       }
     },
+    beforeRouteEnter: (to, from, next) => { // Éo hiểu sao ở index.js đã config là redirect qua login mà nó không work
+      if (localStorage.getItem('user') == null) {
+        next(vm => {vm.$router.push({name: 'login'})})
+      }
+      else next()
+    }
   }
 </script>
 

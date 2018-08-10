@@ -43,11 +43,11 @@ export default {
           password: this.password
         })
         .then(response => {
-          localStorage.setItem('user',JSON.stringify(response.data.userInfo))
-          localStorage.setItem('token',response.data.token)
-          this.axios.defaults.headers.common['token'] = response.data.token
-          this.$store.commit('signined')
-          this.$router.push({name: 'index'})
+          localStorage.setItem("user", JSON.stringify(response.data.userInfo));
+          localStorage.setItem("token", response.data.token);
+          this.axios.defaults.headers.common["token"] = response.data.token;
+          this.$store.commit("signined");
+          this.$router.push({ name: "index" });
         })
         .catch(err => {
           if (err.response.status == 404) {
@@ -62,13 +62,14 @@ export default {
             setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
           }
         });
-    },
+    }
   },
   beforeRouteEnter: (to, from, next) => {
-    if (localStorage.getItem('user') != null) {
-      next(vm => {vm.$router.push({name: 'index'})})
-    }
-    else next()
+    if (localStorage.getItem("user") != null) {
+      next(vm => {
+        vm.$router.push({ name: "index" });
+      });
+    } else next();
   }
 };
 </script>
