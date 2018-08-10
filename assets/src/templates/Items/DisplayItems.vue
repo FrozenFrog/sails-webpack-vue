@@ -8,15 +8,17 @@
         <add-items  v-if="isAdmin"></add-items>
         <div class="row">
           <div v-for="item of itemsObject" :key="item.id" class="col s6 m4 l3">
-             <item :item="item"></item>
+             <item v-on:editItem="handleEditItem" :item="item"></item>
           </div>
         </div>
+        <edit-item :itemProp="itemProp"  v-if="isAdmin"></edit-item>
         
     </div>
 </template>
 
 <script>
   import AddItems from './AddItems';
+  import EditItem from './AddItems.vue';
   import Item from './Item.vue'
   let modal = null;
   export default {
@@ -25,13 +27,18 @@
         AddItemTooltips: this.$t("AddItemTooltips") ,
         ItemsMessage_text: this.$t("ItemsMessage_text"),
         isAdmin: 0,
-        itemsObject: [] //Đây là object chứa toàn bộ items sau khi fetch data từ server
+        itemsObject: [], //Đây là object chứa toàn bộ items sau khi fetch data từ server
+        itemProp: ""
       };
     },
     methods: {
+      handleEditItem: function(item){ //handle editItem event from Item.vue then pass prop to edit-item component
+        this.itemProp = item
+      }
     },
     components: {
       AddItems: AddItems,
+      EditItem: EditItem,
       Item: Item
     },
     created: function () {

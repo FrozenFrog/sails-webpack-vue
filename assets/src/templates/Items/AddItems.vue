@@ -51,14 +51,24 @@ export default {
       imgMessage: this.$t("imgMessage"),
       acceptButtonSummit_Text: this.$t("acceptButtonSummit"),
       cancelButtonSummit_Text: this.$t("cancelButtonSummit"),
-      itemName: "",
       itemPrice: 0,
       imgBase64Data: "http://img.khoahoc.tv/photos/image/2014/03/28/coffee.jpg",
       addMessageShow: "",
       addItemNotify_text: "",
-      addItemNotifyError_text: ""
+      addItemNotifyError_text: "",
     };
   },
+  computed:{
+    itemName: function() {
+      if(this.itemProp) return this.itemProp.itemName
+    }
+  },
+  watch: {
+    itemProp: function (newValItemProp, oldValItemProp) {
+      this.itemProp = newValItemProp
+    }
+  },
+  props: ["itemProp"],
   methods: {
     submitPrice() {
       this.itemPrice = this.itemPrice * 1000;
@@ -98,7 +108,8 @@ export default {
           this.addMessageShow = "fadeInUp";
           this.addItemNotify_text =
             this.$t("addItemNotifyError_text") +
-            err.response.status.toString() + ": " +
+            err.response.status.toString() +
+            ": " +
             err.response.data;
           setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
         });
