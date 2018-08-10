@@ -63,7 +63,7 @@ export default {
     submitPrice() {
       this.itemPrice = this.itemPrice * 1000;
     },
-    previewImage: function (event) {
+    previewImage: function(event) {
       //https://jsfiddle.net/mani04/5zyozvx8/
       // Reference to the DOM input element
       var input = event.target;
@@ -82,20 +82,27 @@ export default {
       }
     },
     addItem() {
-          let payload = {itemName: this.itemName, itemPrice: this.itemPrice, imgBase64Data: this.imgBase64Data}
-          this.axios.post('/items/add', payload).then(response => {
-              this.addMessageShow = "fadeInUp"
-              this.addItemNotify_text = this.$t("addItemNotify_text");
-              setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
-          }).catch(err => {
-              this.addMessageShow = "fadeInUp"
-              this.addItemNotifyError_text = this.$t("addItemNotifyError_text") + err.response.status.toString() + err.response.data
-              setInterval(() => (this.loginMessageShow = "fadeOutDown"), 5000);
-          })
+      let payload = {
+        itemName: this.itemName,
+        itemPrice: this.itemPrice,
+        imgBase64Data: this.imgBase64Data
+      };
+      this.axios
+        .post("/items/add", payload)
+        .then(response => {
+          this.addMessageShow = "fadeInUp";
+          this.addItemNotify_text = this.$t("addItemNotify_text");
+          setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
+        })
+        .catch(err => {
+          this.addMessageShow = "fadeInUp";
+          this.addItemNotifyError_text =
+            this.$t("addItemNotifyError_text") +
+            err.response.status.toString() +
+            err.response.data;
+          setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
+        });
     }
-  },
-  created: function(){
-      
   }
 };
 </script>
