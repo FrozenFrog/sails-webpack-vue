@@ -43,6 +43,9 @@
             loggedin (){
                 return this.$store.state.loggedin
             }
+        },
+        created: function () {
+            if (localStorage.getItem('user') != null) this.$store.state.loggedin = true 
         }
     }
 </script>

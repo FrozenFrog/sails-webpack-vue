@@ -3,6 +3,8 @@
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
+ * Vì lý do dùng jsonWebToken để xác thực người dùng, nên không có hàm logout vì bản chất của token là stateless.
+ * https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6
  */
 
 module.exports = {
