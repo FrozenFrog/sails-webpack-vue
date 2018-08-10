@@ -4,7 +4,7 @@
         <a data-target="modal1"  :class="editable"  @click="editItem(item)" :style="pointer">
             <img :src="item.imgBase64Data" alt="item.itemPrice" class="responsive-img">
             <span><i class="material-icons">bookmark_border</i>{{item.itemName}} </span> <br>
-            <span><i class="material-icons">attach_money</i>{{item.itemName}} </span>
+            <span><i class="material-icons">attach_money</i>{{item.itemPrice}} </span>
         </a>
     </div>
 </div>

@@ -14,13 +14,15 @@
                   <div style="padding-left: 60px; width: 80%;">
                       <div class="row">
                           <div class="input-field col s12">
-                              <input id="itemName" type="text" v-model="itemName" class="validate">
-                              <label for="itemName">{{itemNameMessage}}</label>
+                              <input v-if="editItem" id="itemName" type="text" :value="itemProp.itemName" class="validate" >
+                              <input v-else id="itemName" type="text" class="validate">
+                              <label :class="{active: editItem}" for="itemName">{{itemNameMessage}}</label>
                           </div>
                       </div>
                       <div class="row">
                           <div class="input-field col s12">
-                              <input id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate">
+                              <input v-if="editItem" id="itemPrice" type="number" min="0" step="1000" :value="itemProp.itemPrice" @keyup.enter="submitPrice" class="validate">
+                              <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate">
                               <label for="itemPrice">{{itemPriceMessage}}</label>
                           </div>
                       </div>
@@ -51,6 +53,7 @@ export default {
       imgMessage: this.$t("imgMessage"),
       acceptButtonSummit_Text: this.$t("acceptButtonSummit"),
       cancelButtonSummit_Text: this.$t("cancelButtonSummit"),
+      itemName: "",
       itemPrice: 0,
       imgBase64Data: "http://img.khoahoc.tv/photos/image/2014/03/28/coffee.jpg",
       addMessageShow: "",
@@ -59,14 +62,12 @@ export default {
     };
   },
   computed:{
-    itemName: function() {
-      if(this.itemProp) return this.itemProp.itemName
+    editItem: function() {
+      if(this.itemProp != "") return true
+      else return false
     }
   },
-  watch: {
-    itemProp: function (newValItemProp, oldValItemProp) {
-      this.itemProp = newValItemProp
-    }
+  create: function() {
   },
   props: ["itemProp"],
   methods: {
