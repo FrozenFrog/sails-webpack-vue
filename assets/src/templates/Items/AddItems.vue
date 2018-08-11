@@ -14,15 +14,16 @@
                   <div style="padding-left: 60px; width: 80%;">
                       <div class="row">
                           <div class="input-field col s12">
-                              <input v-if="editItem" id="itemName" type="text" :value="itemProp.itemName" class="validate" >
-                              <input v-else id="itemName" type="text" class="validate">
-                              <label :class="{active: editItem}" for="itemName">{{itemNameMessage}}</label>
+                              <input v-if="$store.state.editItem" id="itemName" type="text" :value="$store.state.editItemProp.itemName" class="validate" key="itemname-edit">
+                              <input v-else id="itemName" type="text" v-model="itemName" class="validate" key="itemname-add">
+                              <label :class="{active: typeof $store.state.editItemProp === 'object'}" for="itemName">{{itemNameMessage}}</label>
                           </div>
                       </div>
                       <div class="row">
                           <div class="input-field col s12">
-                              <input v-if="editItem" id="itemPrice" type="number" min="0" step="1000" :value="itemProp.itemPrice" @keyup.enter="submitPrice" class="validate">
-                              <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate">
+                              <input v-if="$store.state.editItem" id="itemPrice" type="number" min="0" step="1000" 
+                              :value="$store.state.editItemProp.itemPrice" @keyup.enter="submitPrice" class="validate" key="itemprice=-edit">
+                              <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate" key="itemprice-edit">
                               <label for="itemPrice">{{itemPriceMessage}}</label>
                           </div>
                       </div>
@@ -61,15 +62,10 @@ export default {
       addItemNotifyError_text: "",
     };
   },
-  computed:{
-    editItem: function() {
-      if(this.itemProp != "") return true
-      else return false
-    }
+  watch: {
   },
-  create: function() {
+  created: function() {
   },
-  props: ["itemProp"],
   methods: {
     submitPrice() {
       this.itemPrice = this.itemPrice * 1000;

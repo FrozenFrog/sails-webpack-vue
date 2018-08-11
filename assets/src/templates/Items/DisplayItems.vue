@@ -11,7 +11,7 @@
              <item v-on:editItem="handleEditItem" :item="item"></item>
           </div>
         </div>
-        <edit-item :itemProp="itemProp"  v-if="isAdmin"></edit-item>
+        <edit-item v-if="$store.state.editItem && isAdmin"></edit-item>
         
     </div>
 </template>
@@ -28,12 +28,12 @@
         ItemsMessage_text: this.$t("ItemsMessage_text"),
         isAdmin: 0,
         itemsObject: [], //Đây là object chứa toàn bộ items sau khi fetch data từ server
-        itemProp: ""
       };
     },
     methods: {
       handleEditItem: function(item){ //handle editItem event from Item.vue then pass prop to edit-item component
-        this.itemProp = item
+        this.$store.state.editItemProp = item
+        this.$store.commit('editItemHandle')
       }
     },
     components: {
