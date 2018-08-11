@@ -26,7 +26,7 @@
                           <div class="input-field col s12">
                               <input v-if="$store.state.editItem" id="itemPrice" type="number" min="0" step="1000" ref="itemPriceInput" 
                               v-bind:value="itemPrice = $store.state.editItemProp.itemPrice"
-                              v-on:input="handleInput($event.target.value, 'itemPrice')" @keyup.enter="submitPrice" class="validate" key="itemprice=-edit">
+                              v-on:input="handleInput($event.target.value, 'itemPrice')" @keyup.enter="submitPrice" key="itemprice=-edit">
 
                               <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate" key="itemprice-edit">
                               <label for="itemPrice">{{itemPriceMessage}}</label>
@@ -71,19 +71,25 @@ export default {
 
   },
   updated: function() {
-    this.$refs.itemNameInput.value = this.$store.state.editItemProp.itemName
-    this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice, 10)
-    console.log(typeof this.$refs.itemPriceInput.value)
+    if(this.$store.state.editItem){
+      this.$refs.itemNameInput.value = this.$store.state.editItemProp.itemName
+      this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice, 10)    
+    }
   },
   methods: {
     handleInput(value, itemPropEdit){
       if(itemPropEdit == 'itemPrice') {
         this.$store.state.editItemProp[itemPropEdit] = parseInt(value)
+        
       } else {
         this.$store.state.editItemProp[itemPropEdit] = value
       }
     },
     submitPrice() {
+      if(this.$store.state.editItem){
+        this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice,10) * 1000
+        this.$store.state.editItemProp.itemPrice = parseInt(this.$refs.itemPriceInput.value)
+      }
       this.itemPrice = parseInt(this.itemPrice) * 1000;
     },
     previewImage: function(event) {
