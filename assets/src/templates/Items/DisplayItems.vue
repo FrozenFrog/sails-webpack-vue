@@ -13,72 +13,95 @@
         </div>
         <div class="row">
           <div v-for="item of itemsObject" :key="item.id" class="col s6 m4 l3">
-             <item v-on:editItem="handleEditItem" :item="item"></item>
+             <item v-on:editItem="handleEditItem" :item="item" :key="item.id"></item>
           </div>
         </div>
     </div>
 </template>
 
 <script>
-  import AddItems from './AddItems';
-  import EditItem from './AddItems.vue';
-  import Item from './Item.vue'
-  let modal = null;
-  export default {
-    data() {
-      return {
-        AddItemTooltips: this.$t("AddItemTooltips") ,
-        ItemsMessage_text: this.$t("ItemsMessage_text"),
-        isAdmin: 0,
-        itemsObject: [], //Đây là object chứa toàn bộ items sau khi fetch data từ server
-      };
+import AddItems from "./AddItems";
+import EditItem from "./AddItems.vue";
+import Item from "./Item.vue";
+import VueRouter from "vue-router";
+var modalShow = null;
+var observer = null;
+//Do không thể access this.$router từ bên ngoài này nên tạo VueRouter mới
+const router = new VueRouter({});
+var modalClose = function(){
+  router.replace({path: '/items'})
+}
+export default {
+  data() {
+    return {
+      AddItemTooltips: this.$t("AddItemTooltips"),
+      ItemsMessage_text: this.$t("ItemsMessage_text"),
+      isAdmin: 0,
+      itemsObject: null //Đây là object chứa toàn bộ items sau khi fetch data từ server
+    };
+  },
+  computed: {},
+  methods: {
+    handleEditItem: function(item) {
+      //handle editItem event from Item.vue then pass prop to edit-item component
+      modalShow = true;
+      this.$store.commit("editItemHandle", item);
     },
-    watch: {
+    addItemHanlde: function() {
+      if (this.$store.state.editItemProp) {
+        modalShow = true;
+        this.$store.state.editItem = false;
+        this.$store.state.editItemProp = null;
+      }
+    }
+  },
+  components: {
+    AddItems: AddItems,
+    EditItem: EditItem,
+    Item: Item
+  },
+  mounted: function() {
+    M.Modal.init(this.$el.querySelectorAll(".modal")[0]);
+    //MutationObserver xem sự thay đổi của div.modal có class open hay ko, nếu ko có mà modalShow (tức là nó đã từng show rồi) => $router replace về /items
+    var target = document.querySelectorAll(".modal")[0];
+    observer = new MutationObserver(function(mutations) {
+      const changes = mutations.filter(
+        ({ attributeName }) => attributeName === "class"
+      );
+      if (!target.classList.contains('open') && modalShow ) {
+        modalClose()
+      }
+    });
 
-    },
-    methods: {
-      handleEditItem: function(item){ //handle editItem event from Item.vue then pass prop to edit-item component
-        this.$store.commit('editItemHandle', item)
-      },
-      addItemHanlde: function(){
-        if(this.$store.state.editItemProp) {
-          this.$store.state.editItem = false
-          this.$store.state.editItemProp = null
-        }
-      }
-    },
-    components: {
-      AddItems: AddItems,
-      EditItem: EditItem,
-      Item: Item
-    },
-    mounted: function() {
-      M.Modal.init(this.$el.querySelectorAll('.modal'))
-    },
-    created: function () {
-      let user = JSON.parse(localStorage.getItem('user'))
-      if(user){
-        if (user.isAdmin) this.isAdmin = user.isAdmin
-      }
-      else this.$router.push({name: 'login'})
-      this.axios.get('/items').then(response => {
-        this.itemsObject = response.data
-      }).catch(err => {
-        console.log("Cannot get items data from server")
+    // pass in the target node, as well as the observer options
+    observer.observe(target, {attributes: true});
+  },
+  beforeUpdate: function() {},
+  created: function() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      if (user.isAdmin) this.isAdmin = user.isAdmin;
+    } else this.$router.push({ name: "login" });
+    this.axios
+      .get("/items")
+      .then(response => {
+        this.itemsObject = response.data;
       })
-    },
-
-  };
+      .catch(err => {
+        console.log("Cannot get items data from server");
+      });
+  }
+};
 </script>
 
 <style scoped>
 a.modal-trigger {
   padding-right: 20px;
 }
-div.col.s6{
-    padding-bottom: 20px;
+div.col.s6 {
+  padding-bottom: 20px;
 }
-div.divider{
+div.divider {
   margin-bottom: 20px;
 }
 </style>

@@ -38,10 +38,10 @@
                   </div>   
               </div>
               <div class="modal-footer right">
-                  <a class="btn waves-effect waves-light" @click="addItem" >
+                  <a class="btn waves-effect waves-light" @click="request" >
                   {{acceptButtonSummit_Text}} <i class="material-icons">send</i>
                   </a>
-                  <a class="btn waves-effect waves-light red modal-close">
+                  <a class="btn waves-effect waves-light red modal-close" @click="cancel" >
                   {{cancelButtonSummit_Text}} <i class="material-icons">cancel_presentation</i>
                   </a>
               </div>
@@ -79,9 +79,9 @@ export default {
   methods: {
     handleInput(value, itemPropEdit) {
       if (itemPropEdit == "itemPrice") {
-        this.$store.state.editItemProp[itemPropEdit] = parseInt(value);
+        this.itemPrice = parseInt(value);
       } else {
-        this.$store.state.editItemProp[itemPropEdit] = value;
+        this.itemName = value;
       }
     },
     submitPrice() {
@@ -116,18 +116,25 @@ export default {
         reader.readAsDataURL(input.files[0]);
       }
     },
-    addItem() {
+    request() {
       let payload = {
         itemName: this.itemName,
         itemPrice: this.itemPrice,
         imgBase64Data: this.imgBase64Data
       };
-      this.axios
-        .post("/items/add", payload)
+      let url = "/items"
+      if (this.$store.state.editItem){
+        url = url + "/" + this.$store.state.editItemProp.id
+        var method = 'PUT'
+        this.$store.state.editItemProp.itemName = this.itemName
+        this.$store.state.editItemProp.itemPrice = this.itemPrice
+      } 
+      else method = 'POST'
+      this.axios({url:url ,method: method, data: payload})
         .then(response => {
           this.addMessageShow = "fadeInUp";
           this.addItemNotify_text = this.$t("addItemNotify_text");
-          setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
+          setInterval(() => (this.addMessageShow = "fadeOutDown"), 1500);
         })
         .catch(err => {
           this.addMessageShow = "fadeInUp";
@@ -136,8 +143,11 @@ export default {
             err.response.status.toString() +
             ": " +
             err.response.data;
-          setInterval(() => (this.addMessageShow = "fadeOutDown"), 5000);
+          setInterval(() => (this.addMessageShow = "fadeOutDown"), 1500);
         });
+    },
+    cancel(){
+      this.$router.replace({name: "displayitem"})
     }
   }
 };
