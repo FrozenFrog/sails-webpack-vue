@@ -1,11 +1,12 @@
 <template>
 <div>
     <div class="z-depth-3 center-align" id="itemobj">
-        <a data-target="modal1"  :class="editable"  @click="editItem(item)" :style="pointer">
+        <router-link :to="{name: 'edit', params: { id: item.id }}" data-target="modal1"  :class="editable"  v-on:click.native="editItem(item)" :style="pointer" replace>
             <img :src="item.imgBase64Data" alt="item.itemPrice" class="responsive-img">
             <span><i class="material-icons">bookmark_border</i>{{item.itemName}} </span> <br>
             <span><i class="material-icons">attach_money</i>{{item.itemPrice}} </span>
-        </a>
+        </router-link>
+
     </div>
 </div>
 

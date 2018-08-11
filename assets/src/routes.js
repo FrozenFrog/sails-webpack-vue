@@ -13,7 +13,17 @@ export const routes = [
     name: "displayitem",
     meta: {
       requiresAuth: true
-    }
+    },
+    children: [
+      {
+        name: "edit",
+        path: 'edit/:id',
+      },
+      {
+        name: "add",
+        path: "add"
+      }
+    ]
   },
   {
     path: "/",

@@ -2,7 +2,9 @@
     <div>
         <div class="section">
           <a class="left-align">{{ItemsMessage_text.toUpperCase()}}</a>
-          <a class="right-align modal-trigger btn-floating btn-large waves-effect waves-light red" @click="addItemHanlde" data-target="modal1" v-tooltip.left-start="AddItemTooltips" :class="{disabled: !isAdmin}"><i class="material-icons">add</i></a>
+          <router-link :to="{name: 'add'}" class="right-align modal-trigger btn-floating btn-large waves-effect waves-light red" @click.native="addItemHanlde" data-target="modal1" v-tooltip.left-start="AddItemTooltips" :class="{disabled: !isAdmin}">
+            <i class="material-icons">add</i>
+          </router-link>
         </div>
         <div class="divider teal lighten-2"></div>
         <div class="modal center z-depth-2" id="modal1">  
@@ -49,6 +51,9 @@
       AddItems: AddItems,
       EditItem: EditItem,
       Item: Item
+    },
+    mounted: function() {
+      M.Modal.init(this.$el.querySelectorAll('.modal'))
     },
     created: function () {
       let user = JSON.parse(localStorage.getItem('user'))

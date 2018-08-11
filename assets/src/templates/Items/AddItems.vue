@@ -5,7 +5,10 @@
               <div class="valign-wrapper">
                   <div class="left">
                       <div class="image-upload">
-                          <label for="file-input" style="cursor: pointer;" ><img :src="imgBase64Data" alt="" class="responsive-img"></label>
+                          <label for="file-input" style="cursor: pointer;" >
+                            <img v-if="$store.state.editItem" v-bind:src="imgBase64Data = $store.state.editItemProp.imgBase64Data" alt="" class="responsive-img">
+                            <img v-else v-bind:src="imgBase64Data" alt="" class="responsive-img">
+                          </label>
                           <input id="file-input" @change="previewImage"  type="file" accept="image/*">
                       </div>
                       <a > {{imgMessage}} </a>
@@ -68,6 +71,7 @@ export default {
   },
   watch: {},
   mounted: function() {
+
   },
   beforeUpdate: function() {
   },
@@ -102,6 +106,10 @@ export default {
         reader.onload = e => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
+          
+          if (this.$store.state.editItem){
+            this.$store.state.editItemProp.imgBase64Data = e.target.result;
+          }
           this.imgBase64Data = e.target.result;
         };
         // Start the reader job - read file as a data url (base64 format)
