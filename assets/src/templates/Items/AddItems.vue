@@ -14,15 +14,20 @@
                   <div style="padding-left: 60px; width: 80%;">
                       <div class="row">
                           <div class="input-field col s12">
-                              <input v-if="$store.state.editItem" id="itemName" type="text" :value="$store.state.editItemProp.itemName" class="validate" key="itemname-edit">
+                              <input v-if="$store.state.editItem" id="itemName" type="text" ref="itemNameInput"
+                              v-bind:value="itemName = $store.state.editItemProp.itemName"
+                              v-on:input="handleInput($event.target.value, 'itemName')" class="validate" key="itemname-edit">
+
                               <input v-else id="itemName" type="text" v-model="itemName" class="validate" key="itemname-add">
                               <label :class="{active: typeof $store.state.editItemProp === 'object'}" for="itemName">{{itemNameMessage}}</label>
                           </div>
                       </div>
                       <div class="row">
                           <div class="input-field col s12">
-                              <input v-if="$store.state.editItem" id="itemPrice" type="number" min="0" step="1000" 
-                              :value="$store.state.editItemProp.itemPrice" @keyup.enter="submitPrice" class="validate" key="itemprice=-edit">
+                              <input v-if="$store.state.editItem" id="itemPrice" type="number" min="0" step="1000" ref="itemPriceInput" 
+                              v-bind:value="itemPrice = $store.state.editItemProp.itemPrice"
+                              v-on:input="handleInput($event.target.value, 'itemPrice')" @keyup.enter="submitPrice" class="validate" key="itemprice=-edit">
+
                               <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate" key="itemprice-edit">
                               <label for="itemPrice">{{itemPriceMessage}}</label>
                           </div>
@@ -63,12 +68,23 @@ export default {
     };
   },
   watch: {
+
   },
-  created: function() {
+  updated: function() {
+    this.$refs.itemNameInput.value = this.$store.state.editItemProp.itemName
+    this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice, 10)
+    console.log(typeof this.$refs.itemPriceInput.value)
   },
   methods: {
+    handleInput(value, itemPropEdit){
+      if(itemPropEdit == 'itemPrice') {
+        this.$store.state.editItemProp[itemPropEdit] = parseInt(value)
+      } else {
+        this.$store.state.editItemProp[itemPropEdit] = value
+      }
+    },
     submitPrice() {
-      this.itemPrice = this.itemPrice * 1000;
+      this.itemPrice = parseInt(this.itemPrice) * 1000;
     },
     previewImage: function(event) {
       //https://jsfiddle.net/mani04/5zyozvx8/

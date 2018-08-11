@@ -5,14 +5,13 @@
           <a class="right-align modal-trigger btn-floating btn-large waves-effect waves-light red" data-target="modal1" v-tooltip.left-start="AddItemTooltips" :class="{disabled: !isAdmin}"><i class="material-icons">add</i></a>
         </div>
         <div class="divider teal lighten-2"></div>
-        <add-items  v-if="isAdmin"></add-items>
+        <add-items key="addItems"  v-if="isAdmin"></add-items>
+        <edit-item key="editItem" v-if="$store.state.editItem && isAdmin"></edit-item>
         <div class="row">
           <div v-for="item of itemsObject" :key="item.id" class="col s6 m4 l3">
              <item v-on:editItem="handleEditItem" :item="item"></item>
           </div>
         </div>
-        <edit-item v-if="$store.state.editItem && isAdmin"></edit-item>
-        
     </div>
 </template>
 
