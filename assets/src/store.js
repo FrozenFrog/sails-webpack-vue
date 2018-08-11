@@ -5,7 +5,7 @@ Vue.use(Vuex)
 const state = {
   loggedin: false, //Mặc định là false, như nếu navbar component check có localStorage.getItem('user') != null thì sẽ là true
   editItem: false,
-  editItemProp: "",
+  editItemProp: null,
 }
 export default new Vuex.Store({
     state,
@@ -16,8 +16,9 @@ export default new Vuex.Store({
         signout (state) {
             state.loggedin = false
         },
-        editItemHandle (state) {
+        editItemHandle (state, item) {
+            state.editItemProp = item
             state.editItem = true
-        }
+        },
     }
 })

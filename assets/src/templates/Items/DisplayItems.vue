@@ -2,11 +2,13 @@
     <div>
         <div class="section">
           <a class="left-align">{{ItemsMessage_text.toUpperCase()}}</a>
-          <a class="right-align modal-trigger btn-floating btn-large waves-effect waves-light red" data-target="modal1" v-tooltip.left-start="AddItemTooltips" :class="{disabled: !isAdmin}"><i class="material-icons">add</i></a>
+          <a class="right-align modal-trigger btn-floating btn-large waves-effect waves-light red" @click="addItemHanlde" data-target="modal1" v-tooltip.left-start="AddItemTooltips" :class="{disabled: !isAdmin}"><i class="material-icons">add</i></a>
         </div>
         <div class="divider teal lighten-2"></div>
-        <add-items key="addItems"  v-if="isAdmin"></add-items>
-        <edit-item key="editItem" v-if="$store.state.editItem && isAdmin"></edit-item>
+        <div class="modal center z-depth-2" id="modal1">  
+          <add-items key="addItems"  v-if="!$store.state.editItem && isAdmin"></add-items>
+          <edit-item key="editItem" v-if="$store.state.editItem && isAdmin"></edit-item>
+        </div>
         <div class="row">
           <div v-for="item of itemsObject" :key="item.id" class="col s6 m4 l3">
              <item v-on:editItem="handleEditItem" :item="item"></item>
@@ -29,10 +31,18 @@
         itemsObject: [], //Đây là object chứa toàn bộ items sau khi fetch data từ server
       };
     },
+    watch: {
+
+    },
     methods: {
       handleEditItem: function(item){ //handle editItem event from Item.vue then pass prop to edit-item component
-        this.$store.state.editItemProp = item
-        this.$store.commit('editItemHandle')
+        this.$store.commit('editItemHandle', item)
+      },
+      addItemHanlde: function(){
+        if(this.$store.state.editItemProp) {
+          this.$store.state.editItem = false
+          this.$store.state.editItemProp = null
+        }
       }
     },
     components: {

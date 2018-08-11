@@ -1,5 +1,4 @@
 <template>
-  <div class="modal center z-depth-2" id="modal1">
     <div class="modal-content">
           <h4>{{headerMessage}}</h4>
           <form >
@@ -29,7 +28,7 @@
                               v-on:input="handleInput($event.target.value, 'itemPrice')" @keyup.enter="submitPrice" key="itemprice=-edit">
 
                               <input v-else id="itemPrice" type="number" min="0" step="1000" @keyup.enter="submitPrice" v-model="itemPrice" class="validate" key="itemprice-edit">
-                              <label for="itemPrice">{{itemPriceMessage}}</label>
+                              <label :class="{active: typeof $store.state.editItemProp === 'object'}" for="itemPrice">{{itemPriceMessage}}</label>
                           </div>
                       </div>
                       <h6 class="red-text center-align animated" :class="addMessageShow" >{{addItemNotify_text}}</h6>
@@ -45,7 +44,7 @@
               </div>
           </form>
       </div>
-  </div>
+
     
 </template>
 
@@ -67,28 +66,27 @@ export default {
       addItemNotifyError_text: "",
     };
   },
-  watch: {
-
+  watch: {},
+  mounted: function() {
   },
-  updated: function() {
-    if(this.$store.state.editItem){
-      this.$refs.itemNameInput.value = this.$store.state.editItemProp.itemName
-      this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice, 10)    
-    }
+  beforeUpdate: function() {
   },
+  updated: function() {},
   methods: {
-    handleInput(value, itemPropEdit){
-      if(itemPropEdit == 'itemPrice') {
-        this.$store.state.editItemProp[itemPropEdit] = parseInt(value)
-        
+    handleInput(value, itemPropEdit) {
+      if (itemPropEdit == "itemPrice") {
+        this.$store.state.editItemProp[itemPropEdit] = parseInt(value);
       } else {
-        this.$store.state.editItemProp[itemPropEdit] = value
+        this.$store.state.editItemProp[itemPropEdit] = value;
       }
     },
     submitPrice() {
-      if(this.$store.state.editItem){
-        this.$refs.itemPriceInput.value = parseInt(this.$store.state.editItemProp.itemPrice,10) * 1000
-        this.$store.state.editItemProp.itemPrice = parseInt(this.$refs.itemPriceInput.value)
+      if (this.$store.state.editItem) {
+        this.$refs.itemPriceInput.value =
+          parseInt(this.$store.state.editItemProp.itemPrice, 10) * 1000;
+        this.$store.state.editItemProp.itemPrice = parseInt(
+          this.$refs.itemPriceInput.value
+        );
       }
       this.itemPrice = parseInt(this.itemPrice) * 1000;
     },
