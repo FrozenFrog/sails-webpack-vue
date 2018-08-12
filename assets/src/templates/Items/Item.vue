@@ -2,11 +2,12 @@
 <div>
     <div class="z-depth-3 center-align" id="itemobj">
         <div class="right" >
-            <router-link :to="{name: 'delete', params: {id: item.id}}" class="waves-effect waves-light btn-flat modal-trigger" data-target="modal2" v-on:click.native="deleteItem(item)" replace>
+            <router-link :to="{name: 'delete', params: {id: item.id}}" class="waves-effect waves-light btn-flat modal-trigger" 
+            :class="{disabled: !isAdmin}" data-target="modal2" v-on:click.native="deleteItem(item)" replace>
                 <i class="material-icons">clear</i>
             </router-link>
         </div>
-        <router-link :to="{name: 'edit', params: { id: item.id }}" data-target="modal1"  :class="editable"  v-on:click.native="editItem(item)" :style="pointer" replace>
+        <router-link :to="{name: 'edit', params: { id: item.id }}" data-target="modal1" :class="editable"  v-on:click.native="editItem(item)" replace>
             <img :src="item.imgBase64Data" alt="item.itemPrice" class="responsive-img">
             <span><i class="material-icons">bookmark_border</i>{{item.itemName}} </span> <br>
             <span><i class="material-icons">attach_money</i>{{item.itemPrice}} </span>
@@ -26,10 +27,6 @@ export default {
     };
   },
   computed: {
-    pointer() {
-      if (this.isAdmin) return "cursor: pointer;";
-      else return;
-    }
   },
   props: ["item"],
   methods: {
@@ -48,7 +45,8 @@ export default {
         this.editable = "modal-trigger"; //only show modal to edit if user is admin
         this.isAdmin = user.isAdmin;
       }
-    } else this.$router.push({ name: "login" });
+    } 
+    else this.$router.push({ name: "login" });
   }
 };
 </script>

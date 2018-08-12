@@ -30,6 +30,10 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem("user") == null) {
       router.push({ name: "login" });
     } else next();
+    if (to.matched.some(record => record.meta.requiresAdmin)) {
+      if (JSON.parse(localStorage.getItem("user")).isAdmin) next()
+      else router.replace({ path: from.fullPath})
+    } else next()
   }
   if (!to.matched.length) router.push("index");
   else next();

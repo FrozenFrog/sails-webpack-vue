@@ -1,11 +1,19 @@
 import Login from "./templates/User/Login.vue";
 import Index from "./templates/index.vue";
 import DisplayItems from "./templates/Items/DisplayItems.vue";
+import Checkout from "./templates/Checkout/index.vue"
 export const routes = [
   {
     path: "/login",
     component: Login,
     name: "login"
+  },
+  {
+    path: "/checkout",
+    component: Checkout,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/items",
@@ -18,14 +26,23 @@ export const routes = [
       {
         name: "edit",
         path: 'edit/:id',
+        meta: {
+          requiresAdmin: true
+        }
       },
       {
         name: "add",
-        path: "add"
+        path: "add",
+        meta: {
+          requiresAdmin: true
+        }
       },
       {
         name: "delete",
-        path: "delete/:id"
+        path: "delete/:id",
+        meta: {
+          requiresAdmin: true
+        }
       }
     ]
   },
