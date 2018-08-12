@@ -84,12 +84,9 @@ export default {
     submitPrice() {
       if (this.$store.state.editItem) {
         this.$refs.itemPriceInput.value =
-          parseInt(this.$store.state.editItemProp.itemPrice, 10) * 1000;
-        this.$store.state.editItemProp.itemPrice = parseInt(
-          this.$refs.itemPriceInput.value
-        );
+          parseInt(this.itemPrice, 10) * 1000;
       }
-      this.itemPrice = parseInt(this.itemPrice) * 1000;
+      this.itemPrice = parseInt(this.itemPrice, 10) * 1000;
     },
     previewImage: function(event) {
       //https://jsfiddle.net/mani04/5zyozvx8/
