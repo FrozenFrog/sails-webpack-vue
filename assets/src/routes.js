@@ -11,6 +11,7 @@ export const routes = [
   {
     path: "/checkout",
     component: Checkout,
+    name: 'checkout',
     meta: {
       requiresAuth: true
     }

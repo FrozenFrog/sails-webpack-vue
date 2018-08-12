@@ -8,6 +8,9 @@
                 <router-link tag="li" :to="{name: 'displayitem'}">
                     <a>{{DisplayItems_text}}</a>
                 </router-link>
+                <router-link tag="li" :to="{name: 'checkout'}">
+                    <a>{{Checkout_text}}</a>
+                </router-link>
                 <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>
             </ul>
         </div>
@@ -17,7 +20,7 @@
             <router-link tag="li" :to="{name: 'displayitem'}">
                     <a>{{DisplayItems_text}}</a>
             </router-link>
-            <router-link tag="li" :to="{name: 'displayitem'}">
+            <router-link tag="li" :to="{name: 'checkout'}">
                     <a>{{Checkout_text}}</a>
             </router-link>
             <li><a @click="logout" class="btn waves-effect waves-light center red">{{logout_text}}</a></li>

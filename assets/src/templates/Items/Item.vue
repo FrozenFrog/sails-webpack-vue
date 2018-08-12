@@ -2,7 +2,7 @@
 <div>
     <div class="z-depth-3 center-align" id="itemobj">
         <div class="right" >
-            <router-link :to="{name: 'delete', params: {id: item.id}}" class="waves-effect waves-light btn-flat modal-trigger" 
+            <router-link :to="{name: 'delete', params: {id: item.id}}" class="waves-effect btn-flat modal-trigger" 
             :class="{disabled: !isAdmin}" data-target="modal2" v-on:click.native="deleteItem(item)" replace>
                 <i class="material-icons">clear</i>
             </router-link>
