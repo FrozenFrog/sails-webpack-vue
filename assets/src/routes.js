@@ -22,6 +22,10 @@ export const routes = [
       {
         name: "add",
         path: "add"
+      },
+      {
+        name: "delete",
+        path: "delete/:id"
       }
     ]
   },

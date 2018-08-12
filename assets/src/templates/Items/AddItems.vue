@@ -66,15 +66,12 @@ export default {
       imgBase64Data: "http://img.khoahoc.tv/photos/image/2014/03/28/coffee.jpg",
       addMessageShow: "",
       addItemNotify_text: "",
-      addItemNotifyError_text: "",
+      addItemNotifyError_text: ""
     };
   },
   watch: {},
-  mounted: function() {
-
-  },
-  beforeUpdate: function() {
-  },
+  mounted: function() {},
+  beforeUpdate: function() {},
   updated: function() {},
   methods: {
     handleInput(value, itemPropEdit) {
@@ -106,8 +103,8 @@ export default {
         reader.onload = e => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-          
-          if (this.$store.state.editItem){
+
+          if (this.$store.state.editItem) {
             this.$store.state.editItemProp.imgBase64Data = e.target.result;
           }
           this.imgBase64Data = e.target.result;
@@ -122,19 +119,22 @@ export default {
         itemPrice: this.itemPrice,
         imgBase64Data: this.imgBase64Data
       };
-      let url = "/items"
-      if (this.$store.state.editItem){
-        url = url + "/" + this.$store.state.editItemProp.id
-        var method = 'PUT'
-        this.$store.state.editItemProp.itemName = this.itemName
-        this.$store.state.editItemProp.itemPrice = this.itemPrice
-      } 
-      else method = 'POST'
-      this.axios({url:url ,method: method, data: payload})
+      let url = "/items";
+      if (this.$store.state.editItem) {
+        url = url + "/" + this.$store.state.editItemProp.id;
+        var method = "PUT";
+        this.$store.state.editItemProp.itemName = this.itemName;
+        this.$store.state.editItemProp.itemPrice = this.itemPrice;
+      } else method = "POST";
+      this.axios({ url: url, method: method, data: payload })
         .then(response => {
           this.addMessageShow = "fadeInUp";
           this.addItemNotify_text = this.$t("addItemNotify_text");
           setInterval(() => (this.addMessageShow = "fadeOutDown"), 1500);
+          M.Modal.getInstance(
+            document.querySelectorAll(".modal#modal1")[0]
+          ).close();
+          location.reload();
         })
         .catch(err => {
           this.addMessageShow = "fadeInUp";
@@ -146,8 +146,8 @@ export default {
           setInterval(() => (this.addMessageShow = "fadeOutDown"), 1500);
         });
     },
-    cancel(){
-      this.$router.replace({name: "displayitem"})
+    cancel() {
+      this.$router.replace({ name: "displayitem" });
     }
   }
 };
