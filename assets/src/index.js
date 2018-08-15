@@ -37,6 +37,7 @@ router.beforeEach((to, from, next) => {
   }
   if (!to.matched.length) router.push("index");
   else next();
+  M.AutoInit(); //intialize materialize
 });
 
 const i18n = new VueI18n({
