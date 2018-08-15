@@ -100,7 +100,7 @@ export default {
       if (
         modalShow &&
         (!modal1.classList.contains("open") &&
-        !modal2.classList.contains("open"))
+          !modal2.classList.contains("open"))
       ) {
         modalClose();
       }
@@ -120,7 +120,7 @@ export default {
         this.itemsObject = response.data;
       })
       .catch(err => {
-        console.log("Cannot get items data from server");
+        M.toast({ html: "Cannot get items data from server!" });
       });
   }
 };

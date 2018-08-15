@@ -3,7 +3,13 @@
         <table class="highlight responsive-table">
         <thead>
           <tr>
-              <th>{{itemName_text}}</th>
+              <th>
+                <div class="row">
+                  <div class="input-field col s12">
+                      <input type="text" id="autocomplete-input" ref="autocompleteinput" v-model.lazy="itemName" @keyup.enter="appendChild" class="autocomplete" placeholder="Nhập tên sản phẩm" >
+                  </div>  
+                </div>
+              </th>
               <th>{{itemAmount_text}}</th>
               <th>{{total_text}}</th>
           </tr>
@@ -12,13 +18,9 @@
             <tr>
               <th>
                 <div class="row">
-                  <div class="col s12">
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <input type="text" id="autocomplete-input" class="autocomplete" placeholder="Nhập tên sản phẩm" >
-                        <label class="active" for="autocomplete-input">Sản phẩm đã dùng</label>
-                      </div>
-                    </div>
+                  <div class="chip" >
+                    <img src="https://materializecss.com/images/yuna.jpg" alt="Contact Person">
+                    Jane Doe
                   </div>
                 </div>
               </th>
@@ -36,16 +38,27 @@
 
 <script>
 import { map, pick, zipObject } from "lodash/fp";
-let autocomplete_input = null;
 export default {
   data: function() {
     return {
       itemName_text: this.$t("itemName_text"),
       itemAmount_text: this.$t("itemAmount_text"),
       total_text: this.$t("total_text"),
+      itemName: "",
+      itemList: ""
     };
   },
+  mounted: function(Vue) {
+    M.Autocomplete.init(this.$el.querySelector(".autocomplete"), {
+      onAutocomplete: function(){
+        console.log(this.$refs.autocompleteinput.value)
+      }
+    });
+  },
   methods: {
+    appendChild: function() {
+      console.log(this.itemName);
+    },
     setData: function(value) {
       let itemNameList = map("itemName")(value);
       let imgBase64DataList = map("imgBase64Data")(value);
@@ -70,13 +83,10 @@ export default {
           );
         })
         .catch(err => {
-          console.log("Cannot get items data from server");
+          M.toast({ html: "Cannot get items data from server!" });
         });
     });
   },
-  mounted: function() {
-    M.Autocomplete.init(this.$el.querySelector(".autocomplete"));
-  }
 };
 </script>
 

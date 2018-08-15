@@ -118,7 +118,7 @@ export default {
       let url = "/items";
       if (this.$store.state.editItem) {
         url = url + "/" + this.$store.state.editItemProp.id;
-        var method = "PUT";
+        var method = "PATCH";
         this.$store.state.editItemProp.itemName = this.itemName;
         this.$store.state.editItemProp.itemPrice = this.itemPrice;
       } else method = "POST";
