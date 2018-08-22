@@ -1,18 +1,22 @@
 //Verify header token when request to protected URL
-module.exports = function(req, res, next) {
-  //Check if token header is present
+module.exports = async function(req, res, next) {
+  // Check if token header is present
   if (req.headers && req.headers.token) {
     //token header is present
-    var token = req.headers.token
+    var token = req.headers.token;
   } else {
     //token header is not present
     return res.status(401).send("No token header was found");
   }
-  jwToken.verify(token, function(err, decoded) {
-    if (err) {
+  sails.helpers.jwTokenVerify(token).switch({
+    error: err => {
+      return res.serverError(err);
+    },
+    invalid: () => {
       return res.status(401).send("Invalid token");
+    },
+    success: () => {
+      return next();
     }
-    req.user = decoded;
-    next();
   });
 };

@@ -9,19 +9,21 @@
 
 module.exports = {
   login: async (req, res) => {
-    if (req.method == 'POST'){
-      let userQuery = await User.findOne({Username: req.body.username, Password: req.body.password})
+    if (req.method == "POST") {
+      let userQuery = await User.findOne({
+        Username: req.body.username,
+        Password: req.body.password
+      });
       if (!userQuery) {
-        return res.notFound()
+        return res.notFound();
       }
       /*
       Trả về cái gì nếu verify thành công
       token signed bởi jwToken từ object user - cái này không decoded được ở phía frontend, chỉ  dùng để khi request từ frontend thì backend sẽ verify nó
        */
       userQuery.Password = null; //Delete password
-      return res.json({token: jwToken.sign(userQuery), userInfo: userQuery})
-    }
-    else return res.status(405).send("Method Not Allowed")
+      const token = await sails.helpers.jwTokenSign(userQuery);
+      return res.json({ token: token, userInfo: userQuery });
+    } else return res.status(405).send("Method Not Allowed");
   }
-}
-
+};
