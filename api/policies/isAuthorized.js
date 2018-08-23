@@ -10,7 +10,7 @@ module.exports = async function(req, res, next) {
   }
   sails.helpers.jwTokenVerify(token).switch({
     error: err => {
-      return res.serverError(err);
+      return res.status(500).send("Internal server error");
     },
     invalid: () => {
       return res.status(401).send("Invalid token");

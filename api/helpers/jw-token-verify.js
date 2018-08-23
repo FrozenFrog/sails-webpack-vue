@@ -7,7 +7,8 @@ module.exports = {
     token: {
       type: "string",
       friendlyName: "token to verify",
-      description: "Token string to verify",
+      description: `Một token chia là ba phần header.payload.hash,
+        trong đó hash là cái đề sails.config.secret verify xem có giống lúc sign không`,
       required: true
     }
   },
