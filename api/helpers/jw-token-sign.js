@@ -1,12 +1,12 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 module.exports = {
-  friendlyName: "Jw token sign",
+  friendlyName: 'Jw token sign',
 
-  description: "",
+  description: '',
 
   inputs: {
     userQuery: {
-      type: "ref",
+      type: 'ref',
       required: true
     }
   },
@@ -21,7 +21,7 @@ module.exports = {
       {
         data: userQuery
       },
-      sails.config.secret,
+      sails.config.dataEncryptionKeys.default,
       { expiresIn: 86400 } // 7 days
     );
     return exits.success(token);

@@ -9,7 +9,7 @@
 
 module.exports = {
   login: async (req, res) => {
-    if (req.method == "POST") {
+    if (req.method == 'POST') {
       let userQuery = await User.findOne({
         Username: req.body.username,
         Password: req.body.password
@@ -24,6 +24,6 @@ module.exports = {
       userQuery.Password = null; //Delete password
       const token = await sails.helpers.jwTokenSign(userQuery);
       return res.json({ token: token, userInfo: userQuery });
-    } else return res.status(405).send("Method Not Allowed");
+    } else return res.status(405).send('Method Not Allowed');
   }
 };
