@@ -25,7 +25,7 @@ module.exports = {
     jwt
       .verify(inputs.token, sails.config.models.dataEncryptionKeys.default)
       .then(async (decoded) => {
-        const user = await User.findOne({ Username: decoded.data.Username });
+        const user = await Users.findOne({ Username: decoded.data.Username });
         // check if user not in database for preventing hacking.
         if (!user) {
           return exits.invalid();

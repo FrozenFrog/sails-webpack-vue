@@ -9,16 +9,16 @@
  */
 
 module.exports.policies = {
-  /***************************************************************************
+  /** *************************************************************************
    *                                                                          *
    * Default policy for all controllers and actions, unless overridden.       *
    * (`true` allows public access)                                            *
    *                                                                          *
-   ***************************************************************************/
+   ************************************************************************** */
 
   '*': true,
   // "*": "isAuthorized", // Everything resctricted here
-  UserController: {
-    login: true // We dont need authorization here, allowing public access
-  }
+  UsersController: {
+    login: true, // We dont need authorization here, allowing public access
+  },
 };

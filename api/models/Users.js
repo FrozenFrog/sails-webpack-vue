@@ -6,8 +6,7 @@
  */
 
 module.exports = {
-  tableName: 'User',
-  datastore: 'mongoDB',
+  tableName: 'Users',
   attributes: {
     id: { type: 'string', columnName: '_id' },
     username: {

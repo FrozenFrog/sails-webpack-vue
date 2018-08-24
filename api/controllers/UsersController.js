@@ -11,7 +11,7 @@
 module.exports = {
   login: async (req, res) => {
     if (req.method === 'PUT') {
-      const userQuery = await User.findOne({
+      const userQuery = await Users.findOne({
         username: req.body.username,
       });
       if (!userQuery) {

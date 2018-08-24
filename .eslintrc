@@ -16,7 +16,7 @@
     "async": true,
     "server": true,
 
-    "User": true,
+    "Users": true,
 
     "UserService": true
   },

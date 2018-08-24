@@ -1,9 +1,16 @@
 Item database nên có thêm itemId: auto increment, vì mongodb _id mặc định của nó có chuỗi và số
 Policy sau nay phai prevent get localhost/user, vi no se show het cac document mongodb
 
+Hiện tại khi request tới /user mó sẽ hiện toàn bộ user hiện có, khi nào lên production phải policy lại thằng này
 
-User.create({
+Users.create({
     username: 'admin',
     encryptedPassword: '$2y$10$8DNdSKY/HTIj1FFMmtNIOu8CdkgWDWc3G6tz11.WGohfjr7Bts5K.',
     role: ['Administrators', 'Manager'],
 }).then(sails.log);
+
+Items.create({
+  itemName: 'abc',
+  itemPrice: 5000,
+  imgBase64Data: 'base64',
+}).fetch().then(sails.log)
