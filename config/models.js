@@ -14,10 +14,10 @@
  */
 
 module.exports.models = {
-  //fix autoreload https://github.com/sgress454/sails-hook-autoreload/issues/84
+  // fix autoreload https://github.com/sgress454/sails-hook-autoreload/issues/84
   archiveModelIdentity: false,
 
-  /***************************************************************************
+  /** *************************************************************************
    *                                                                          *
    * Whether the `.create()` and `.update()` model methods should ignore      *
    * (and refuse to persist) unrecognized data-- i.e. properties other than   *
@@ -34,11 +34,11 @@ module.exports.models = {
    * > For more info, see:                                                    *
    * > https://sailsjs.com/docs/concepts/orm/model-settings#?schema           *
    *                                                                          *
-   ***************************************************************************/
+   ************************************************************************** */
 
   // schema: true,
 
-  /***************************************************************************
+  /** *************************************************************************
    *                                                                          *
    * How and whether Sails will attempt to automatically rebuild the          *
    * tables/collections/etc. in your schema.                                  *
@@ -51,11 +51,11 @@ module.exports.models = {
    * > For more info, see:                                                    *
    * > https://sailsjs.com/docs/concepts/orm/model-settings#?migrate          *
    *                                                                          *
-   ***************************************************************************/
+   ************************************************************************** */
 
   migrate: 'alter',
 
-  /***************************************************************************
+  /** *************************************************************************
    *                                                                          *
    * Base attributes that are included in all of your models by default.      *
    * By convention, this is your primary key attribute (`id`), as well as two *
@@ -65,12 +65,12 @@ module.exports.models = {
    * > For more info, see:                                                    *
    * > https://sailsjs.com/docs/concepts/orm/model-settings#?attributes       *
    *                                                                          *
-   ***************************************************************************/
+   ************************************************************************** */
 
   attributes: {
     createdAt: { type: 'number', autoCreatedAt: true },
     updatedAt: { type: 'number', autoUpdatedAt: true },
-    id: { type: 'number', autoIncrement: true }
+    id: { type: 'number', autoIncrement: true },
     //--------------------------------------------------------------------------
     //  /\   Using MongoDB?
     //  ||   Replace `id` above with this instead:
@@ -81,7 +81,7 @@ module.exports.models = {
     //--------------------------------------------------------------------------
   },
 
-  /******************************************************************************
+  /** ****************************************************************************
    *                                                                             *
    * The set of DEKs (data encryption keys) for at-rest encryption.              *
    * i.e. when encrypting/decrypting data for attributes with `encrypt: true`.   *
@@ -93,13 +93,13 @@ module.exports.models = {
    * > For more info, see:                                                       *
    * > https://sailsjs.com/docs/concepts/orm/model-settings#?dataEncryptionKeys  *
    *                                                                             *
-   ******************************************************************************/
+   ***************************************************************************** */
 
   dataEncryptionKeys: {
-    default: '/aFl596AgbHNfAgQno6AieGXahu2CccS3Rjj9nwP7Tg='
+    default: '/aFl596AgbHNfAgQno6AieGXahu2CccS3Rjj9nwP7Tg=',
   },
 
-  /***************************************************************************
+  /** *************************************************************************
    *                                                                          *
    * Whether or not implicit records for associations should be cleaned up    *
    * automatically using the built-in polyfill.  This is especially useful    *
@@ -110,7 +110,7 @@ module.exports.models = {
    *                                                                          *
    * (For production configuration, see `config/env/production.js`.)          *
    *                                                                          *
-   ***************************************************************************/
+   ************************************************************************** */
 
-  cascadeOnDestroy: true
+  cascadeOnDestroy: true,
 };

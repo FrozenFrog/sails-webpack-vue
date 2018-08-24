@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jwt-then');
+
 module.exports = {
   friendlyName: 'Jw token sign',
 
@@ -7,23 +8,22 @@ module.exports = {
   inputs: {
     userQuery: {
       type: 'ref',
-      required: true
-    }
+      required: true,
+    },
   },
 
   exits: {},
 
-  fn: async function(inputs, exits) {
+  async fn(inputs, exits) {
     // To understand more about jwt sign
     // read https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec
-    const userQuery = inputs.userQuery;
-    const token = jwt.sign(
+    const token = await jwt.sign(
       {
-        data: userQuery
+        data: inputs.userQuery,
       },
-      sails.config.dataEncryptionKeys.default,
+      sails.config.models.dataEncryptionKeys.default,
       { expiresIn: 86400 } // 7 days
     );
     return exits.success(token);
-  }
+  },
 };

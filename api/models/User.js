@@ -13,26 +13,38 @@ module.exports = {
     username: {
       type: 'string',
       unique: true,
-      required: true
+      required: true,
     },
-    hashPassword: {
+    encryptedPassword: {
       type: 'string',
-      required: true
+      required: true,
     },
     phoneNumber: {
       type: 'string',
-      allowNull: true
+      allowNull: true,
     },
     emailAddress: {
       type: 'string',
       unique: true,
-      isEmail: true,
-      allowNull: true
+      allowNull: true,
+    },
+    role: {
+      type: 'json',
+      required: true,
+      isNotEmptyString: true,
+      columnType: 'array',
     },
     banned: {
       type: 'boolean',
       defaultsTo: false,
-      isBoolean: true
-    }
-  }
+    },
+    base64Avatar: {
+      type: 'string',
+      allowNull: true,
+    },
+  },
+  customToJSON() {
+    // Return a shallow copy of this record with the pick selected.
+    return _.pick(this, ['username', 'role', 'base64Avatar']);
+  },
 };

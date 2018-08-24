@@ -1,32 +1,36 @@
 {
   "env": {
-      "node": true,
-      "browser": false
+    "node": true,
+    "browser": false
   },
   "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module",
-      "ecmaFeatures": {
-          "jsx": false
-      }
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false
+    }
   },
   "globals": {
-      "_": true,
-      "sails": true,
-      "async": true,
-      "server": true,
+    "_": true,
+    "sails": true,
+    "async": true,
+    "server": true,
 
-      "User": true,
+    "User": true,
 
-      "UserService": true
+    "UserService": true
   },
-  "extends":[
-      "eslint:recommended",
-      "airbnb-base",
-      "plugin:node/recommended"
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:node/recommended",
+    "plugin:lodash-fp/recommended"
   ],
-  "rules":{
-      "no-unused-vars": "warn",
-      "no-console": "warn"
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "no-param-reassign": 0,
+    "linebreak-style": [0, "error", "windows"],
+    "comma-dangle": ["warn", "always-multiline"]
   }
 }
